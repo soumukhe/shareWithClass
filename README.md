@@ -58,14 +58,14 @@ detailed instructions: {detailed_instructions}
 # 7. below is a function to generate the opneAI response
 
 ```python
-import re 
+import re
 import json
 
-temperature = 0.0 <br>
-max_tokens = 4096  # Increased max_tokens to accommodate more output <br>
-top_p = 0.95 <br>
-frequency_penalty = 1.2 
-presence_penalty = 1.2 
+temperature = 0.0
+max_tokens = 4096  # Increased max_tokens to accommodate more output
+top_p = 0.95
+frequency_penalty = 1.2
+presence_penalty = 1.2
 
 def generate_openai_response(instruction, review):
     messages = [
@@ -86,28 +86,43 @@ def generate_openai_response(instruction, review):
     )
 
     # Strip off any unwanted characters and try parsing the JSON
-    output = completion.choices[0].message.content.strip() <br>
+    output = completion.choices[0].message.content.strip()
 
     # Attempt to close the JSON if it's incomplete
-    if not output.endswith("}"): 
-        output += "}" 
+    if not output.endswith("}"):
+        output += "}"
 
     # Fix missing quotes around keys
-    output = re.sub(r'(?<!")(\b\d+\b)(?=:)', r'"\1"', output)  # Adds quotes around unquoted numbers <br>
+    output = re.sub(r'(?<!")(\b\d+\b)(?=:)', r'"\1"', output)  # Adds quotes around unquoted numbers
 
     # Fix missing quotes around values (non-numeric values)
-    output = re.sub(r'(?<=: )([A-Za-z0-9_,\.\'\s-]+)(?=,|})', r'"\1"', output) 
+    output = re.sub(r'(?<=: )([A-Za-z0-9_,\.\'\s-]+)(?=,|})', r'"\1"', output)
 
 
     # Fix any trailing commas before the closing brace
-    if output.endswith(",}"): <br>
-        output = output[:-2] + "}"  # Remove the trailing comma and add the closing brace <br>
+    if output.endswith(",}"):
+        output = output[:-2] + "}"  # Remove the trailing comma and add the closing brace
 
     # Fix missing double quotes around values in object-like structures
-    output = re.sub(r'(?<=: {)([^}]+)(?=})', r'"\1"', output)  # This fixes values inside {} without quotes <br>
+    output = re.sub(r'(?<=: {)([^}]+)(?=})', r'"\1"', output)  # This fixes values inside {} without quotes
 
     # Replace curly quotes with straight quotes
-    output = output.replace('“', '"').replace('”', '"') 
+    output = output.replace('“', '"').replace('”', '"')
+
+
+
+    # Attempt to load and validate the JSON
+    try:
+        json_data = json.loads(output)
+    except json.JSONDecodeError as e:
+        print("Invalid JSON response:", e)
+        return output  # Fallback: Return output for inspection
+
+    # Convert back to JSON string with double quotes using json.dumps()
+    # according to the JSON specification (defined by ECMA-404 and RFC 8259), both keys and string values in JSON must be enclosed in double quotes ("), not single quotes (').
+    json_output = json.dumps(json_data)  # Ensures double quotes in the final output
+
+return json_output
 ```
 # 8. Define the function to use the above function to get categories 
 ```python
