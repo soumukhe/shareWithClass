@@ -122,7 +122,7 @@ def generate_openai_response(instruction, review):
     # according to the JSON specification (defined by ECMA-404 and RFC 8259), both keys and string values in JSON must be enclosed in double quotes ("), not single quotes (').
     json_output = json.dumps(json_data)  # Ensures double quotes in the final output
 
-return json_output
+    return json_output
 ```
 # 8. Define the function to use the above function to get categories 
 ```python
