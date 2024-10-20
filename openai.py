@@ -2,7 +2,7 @@
 
 # 1.  write the .env file to your directory so you can load the key
 
-# %%writefile .env
+%%writefile .env
 OPENAI_API_KEY="my_secret_key"
 
 
