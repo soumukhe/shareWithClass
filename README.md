@@ -23,15 +23,15 @@ import openai
 ```
 # 4. load your environment
 ```pytho
-import os <br>
-from dotenv import load_dotenv <br>
-load_dotenv() <br>
-openai.api_key = os.getenv('OPENAI_API_KEY') <br>
+import os 
+from dotenv import load_dotenv 
+load_dotenv() 
+openai.api_key = os.getenv('OPENAI_API_KEY') 
 ```
 # 5. Load the model:
 ```python    
 # load the gpt-4o model
-model = 'gpt-4o'  <br>  
+model = 'gpt-4o'   
 ```
 # 6. Define the instructions:
 ```python
