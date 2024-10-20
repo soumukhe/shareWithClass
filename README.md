@@ -33,7 +33,29 @@ openai.api_key = os.getenv('OPENAI_API_KEY') <br>
 # load the gpt-4o model
 model = 'gpt-4o'  <br>  
 ```
-# 6. below is a function to generate the opneAI response
+# 6. Define the instructions:
+```python
+detailed_instructions = """
+
+**Important**: Return **at most 8 topics**
+- Return the output in JSON format with keys as the topic number and values as the actual topic.
+- do not include any extra formatting, or symbols such as '```json'. Only return the json object
+- keys and values must have double quotes
+
+
+
+Below is a sample output:
+{"1": "Politics", "2": "Economy", "3": "Health" }
+"""
+```
+```python
+instructions = f"""
+Please read the news headline and extract the key topics.
+detailed instructions: {detailed_instructions}
+"""
+```
+
+# 7. below is a function to generate the opneAI response
 
 ```python
 import re 
@@ -87,7 +109,7 @@ def generate_openai_response(instruction, review):
     # Replace curly quotes with straight quotes
     output = output.replace('“', '"').replace('”', '"') 
 ```
-# 7. Define the function to use the above function to get categories 
+# 8. Define the function to use the above function to get categories 
 ```python
 def get_categories(news):
 
@@ -117,7 +139,7 @@ def get_categories(news):
     return unique_topics_json
 ```
 
-# 8. Test with 1 news article
+# 9. Test with 1 news article
 ```python
 news = data_1.loc[17, 'News']
 get_categories(news)
