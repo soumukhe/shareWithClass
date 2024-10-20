@@ -11,7 +11,7 @@ temporary repo to share info
 OPENAI_API_KEY="my_secret_key"
 ```
 
-# 2. insteall these packages
+# 2. install these packages
 ```python
 !pip install -q python-dotenv <br>
 !pip install -q prompts <br>
