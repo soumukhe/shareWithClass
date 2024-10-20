@@ -147,4 +147,4 @@ get_categories(news)
 # Output:
 ```csv
 '{"1": "Business", "2": "Economy", "3": "Finance", "4": "Investment", "5": "Manufacturing", "6": "Media", "7": "Politics",
-```"8": "Taxation", "9": "Technology", "10": "Trade"}'    
+"8": "Taxation", "9": "Technology", "10": "Trade"}'    
